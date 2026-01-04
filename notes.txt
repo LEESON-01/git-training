@@ -2,4 +2,6 @@ Git Day 1 - Learning version control.
 Day 1 - I have successfully added a second line.
 This line was added on Git Day 2.
 Day 2 mini challenge line.
-This line was added on the feature-notes branch. 
+This line was added on the feature-notes branch.
+This line was added on the experiment branch. 
+This line was added after being removed by restoring the file in the recap branch.
