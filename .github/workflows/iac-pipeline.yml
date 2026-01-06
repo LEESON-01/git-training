@@ -35,5 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - name: Simulated deployment
-        run: echo "Deployment approved for DEV environment"
+      - name: Simulated deployment deployment failure
+        run: echo "Simulating deployment error"
+        exit 1
