@@ -1,0 +1,53 @@
+name: Enterprise Multi-Environment Pipeline
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          auth-type: SERVICE_PRINCIPAL
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Validate DEV Bicep
+        run: az bicep build --file infra/dev/main.bicep
+
+      - name: Validate TEST Bicep
+        run: az bicep build --file infra/test/main.bicep
+
+      - name: Validate PROD Bicep
+        run: az bicep build --file infra/prod/main.bicep
+
+  deploy-dev:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Simulated DEV deployment
+        run: echo "DEV environment deployment approved"
+
+  deploy-test:
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: Simulated TEST deployment
+        run: echo "TEST environment deployment approved"
+
+  deploy-prod:
+    needs: deploy-test
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Simulated PROD deployment
+        run: echo "PROD environment deployment approved"
