@@ -25,3 +25,14 @@ jobs:
         run: |
           az version
           az account show
+
+      - name: Validate Bicep templates
+        run: |
+          az bicep build --file infra/main.bicep
+
+  deploy-dev:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulated deployment
+        run: echo "Deployment approved for DEV environment"
